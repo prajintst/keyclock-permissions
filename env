@@ -1,0 +1,4 @@
+KEYCLOAK_REALM=insureka-backoffice
+KEYCLOAK_AUTH_SERVER_URL=https://keycloak-dev.insureka.in/auth/
+KEYCLOAK_CLIENT_ID=keyclock-permission
+KEYCLOAK_CLIENT_SECRET=
