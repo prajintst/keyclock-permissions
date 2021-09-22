@@ -9,6 +9,10 @@ keycloak:
   public-client: false
   policy-enforcer-config:
     lazy-load-paths: true
+    http-method-as-scope: true
+    path-cache-config:
+      max-entries: 1000
+      lifespan: 1000
   securityConstraints:
     - authRoles:
        - '*'
