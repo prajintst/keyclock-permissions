@@ -1,0 +1,19 @@
+keycloak:
+  realm: ${KEYCLOAK_REALM}
+  auth-server-url: ${KEYCLOAK_AUTH_SERVER_URL}
+  ssl-required: external
+  resource: ${KEYCLOAK_CLIENT_ID}
+  credentials.secret: ${KEYCLOAK_CLIENT_SECRET}
+  use-resource-role-mappings: true
+  cors: true
+  public-client: false
+  policy-enforcer-config:
+    lazy-load-paths: true
+  securityConstraints:
+    - authRoles:
+       - '*'
+      securityCollections:
+        - name: protected
+          patterns:
+            - '/*'
+

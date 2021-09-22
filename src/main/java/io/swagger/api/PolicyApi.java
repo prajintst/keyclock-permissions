@@ -47,7 +47,7 @@ public interface PolicyApi {
             method = RequestMethod.GET)
     ResponseEntity<ModelApiResponse> approvePolicy();
 
-    @Operation(summary = "Get user info and policy details", description = "This can only be done by the logged in user who have permission to access.", security = {
+    @Operation(summary = "reject policy", description = "This can only be done by the logged in user who have permission to access.", security = {
         @SecurityRequirement(name = "bearerAuth")    }, tags={ "IntranetUser" })
     @ApiResponses(value = { 
         @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))),
@@ -59,6 +59,34 @@ public interface PolicyApi {
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<ModelApiResponse> rejectPolicy();
+
+
+    @Operation(summary = "view image", description = "This can only be done by the logged in user who have permission to access.", security = {
+            @SecurityRequirement(name = "bearerAuth")    }, tags={ "IntranetUser" })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))),
+
+            @ApiResponse(responseCode = "401", description = "Invalid Token /Authentication Failed", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))),
+
+            @ApiResponse(responseCode = "403", description = "user Don't have the permission", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))) })
+    @RequestMapping(value = "/images",
+            produces = { "application/json" },
+            method = RequestMethod.GET)
+    ResponseEntity<ModelApiResponse> viewImages();
+
+
+    @Operation(summary = "update image", description = "This can only be done by the logged in user who have permission to access.", security = {
+            @SecurityRequirement(name = "bearerAuth")    }, tags={ "IntranetUser" })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))),
+
+            @ApiResponse(responseCode = "401", description = "Invalid Token /Authentication Failed", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))),
+
+            @ApiResponse(responseCode = "403", description = "user Don't have the permission", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))) })
+    @RequestMapping(value = "/images",
+            produces = { "application/json" },
+            method = RequestMethod.PUT)
+    ResponseEntity<ModelApiResponse> updateImages();
 
 }
 
