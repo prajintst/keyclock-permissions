@@ -75,12 +75,13 @@ public class SecurityConfig extends KeycloakWebSecurityConfigurerAdapter {
         return new HttpSessionManager();
     }
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         super.configure(http);
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/v1/**").authenticated()
+                .antMatchers("/v1/**","/intranet/**").authenticated()
                 .anyRequest().permitAll();
     }
 }

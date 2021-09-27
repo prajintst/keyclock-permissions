@@ -13,11 +13,25 @@ keycloak:
     path-cache-config:
       max-entries: 1000
       lifespan: 1000
+    paths:
+      - name: Insecure Resource
+        path: /
+        enforcement-mode: DISABLED
+      - name: Swagger UI
+        path: /swagger-ui/*
+        enforcement-mode: DISABLED
+      - name: Swagger Resources
+        path: /swagger-resources/*
+        enforcement-mode: DISABLED
+      - name: Swagger api Resources
+        path: /api-docs
+        enforcement-mode: DISABLED
   securityConstraints:
     - authRoles:
        - '*'
       securityCollections:
         - name: protected
           patterns:
-            - '/*'
+            - '/v1/*'
+            - '/intranet/*'
 
