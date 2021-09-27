@@ -16,7 +16,6 @@ import java.io.IOException;
 
 @RestController
 @Api(tags = { "IntranetUser" })
-@RequestMapping("/v1")
 public class PolicyApiController implements PolicyApi {
 
     private static final Logger log = LoggerFactory.getLogger(PolicyApiController.class);
@@ -51,6 +50,9 @@ public class PolicyApiController implements PolicyApi {
         return getModelApiResponseResponseEntity();
     }
 
+    public ResponseEntity<ModelApiResponse> acceptPolicy(String jobId) {
+        return getModelApiResponseResponseEntity();
+    }
 
     private ResponseEntity<ModelApiResponse> getModelApiResponseResponseEntity() {
         String accept = request.getHeader("Accept");

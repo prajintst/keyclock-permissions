@@ -5,8 +5,11 @@
  */
 package io.swagger.api;
 
+import io.swagger.annotations.ApiParam;
 import io.swagger.model.ModelApiResponse;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -14,6 +17,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -29,7 +33,7 @@ public interface PolicyApi {
             @ApiResponse(responseCode = "401", description = "Invalid Token /Authentication Failed", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))),
 
             @ApiResponse(responseCode = "403", description = "user Don't have the permission", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))) })
-    @RequestMapping(value = "/approve-documents",
+    @RequestMapping(value = "/v1/approve-documents",
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<ModelApiResponse> approveDocuments();
@@ -42,7 +46,7 @@ public interface PolicyApi {
             @ApiResponse(responseCode = "401", description = "Invalid Token /Authentication Failed", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))),
 
             @ApiResponse(responseCode = "403", description = "user Don't have the permission", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))) })
-    @RequestMapping(value = "/approve-policy",
+    @RequestMapping(value = "/v1/approve-policy",
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<ModelApiResponse> approvePolicy();
@@ -55,7 +59,7 @@ public interface PolicyApi {
         @ApiResponse(responseCode = "401", description = "Invalid Token /Authentication Failed", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))),
         
         @ApiResponse(responseCode = "403", description = "user Don't have the permission", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))) })
-    @RequestMapping(value = "/reject-policy",
+    @RequestMapping(value = "/v1/reject-policy",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     ResponseEntity<ModelApiResponse> rejectPolicy();
@@ -69,7 +73,7 @@ public interface PolicyApi {
             @ApiResponse(responseCode = "401", description = "Invalid Token /Authentication Failed", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))),
 
             @ApiResponse(responseCode = "403", description = "user Don't have the permission", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))) })
-    @RequestMapping(value = "/images",
+    @RequestMapping(value = "/v1/images",
             produces = { "application/json" },
             method = RequestMethod.GET)
     ResponseEntity<ModelApiResponse> viewImages();
@@ -83,10 +87,24 @@ public interface PolicyApi {
             @ApiResponse(responseCode = "401", description = "Invalid Token /Authentication Failed", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))),
 
             @ApiResponse(responseCode = "403", description = "user Don't have the permission", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))) })
-    @RequestMapping(value = "/images",
+    @RequestMapping(value = "/v1/images",
             produces = { "application/json" },
             method = RequestMethod.PUT)
     ResponseEntity<ModelApiResponse> updateImages();
+
+
+    @Operation(summary = "accept Policy", description = "This can only be done by the logged in user who have permission to access.", security = {
+            @SecurityRequirement(name = "bearerAuth")    }, tags={ "IntranetUser" })
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successful operation", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))),
+
+            @ApiResponse(responseCode = "401", description = "Invalid Token /Authentication Failed", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))),
+
+            @ApiResponse(responseCode = "403", description = "user Don't have the permission", content = @Content(mediaType = "application/json", schema = @Schema(implementation = ModelApiResponse.class))) })
+    @RequestMapping(value = "/intranet/api/v1/backoffice/{jobId}/acceptPolicy",
+            produces = { "application/json" },
+            method = RequestMethod.POST)
+    ResponseEntity<ModelApiResponse> acceptPolicy(@Parameter(in = ParameterIn.PATH, description = "", required = true, schema = @Schema()) @ApiParam(value = "Unique ID", required = true) @PathVariable String jobId);
 
 }
 
