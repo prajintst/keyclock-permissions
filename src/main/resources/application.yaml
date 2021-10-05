@@ -7,6 +7,7 @@ keycloak:
   use-resource-role-mappings: true
   cors: true
   public-client: false
+  bearer-only: true
   policy-enforcer-config:
     lazy-load-paths: true
     http-method-as-scope: true
